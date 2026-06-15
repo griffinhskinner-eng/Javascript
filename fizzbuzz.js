@@ -1,4 +1,4 @@
-const targetElement = document.getElementById("fizzbuzz"); // Find the HTML element with the ID "hello-world" to connect
+const targetElement = document.getElementById("fizzbuzz"); // Find the HTML element with the ID "fizzbuzz" to connect
 
 function fizzbuzz() {
     for (let i = 1; i < 51; i++) {//for loop in js with three parameters
