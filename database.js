@@ -37,7 +37,7 @@ function usersNumber() {
 //Find average age
 function averageAge() {
     let totalAge = 0;
-    for (let i = 0; i < users.length; i++) {
+    for (let i = 0; i < users.length; i++) { 
         totalAge += users[i].age
     }
     
