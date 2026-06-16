@@ -1,0 +1,6 @@
+.form-group {
+  display: flex;
+  flex-direction: column; /* Stacks children vertically */
+  gap: 8px;              /* Adds spacing between label and select */
+  width: 200px;          /* Optional: sets a width for the field */
+}
