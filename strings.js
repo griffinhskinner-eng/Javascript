@@ -7,15 +7,15 @@ const meal = "Hamburger";
 function slice(){
     const partialRestaurant = restaurant.slice(0,5)
     const partialMeal = meal.slice(3,9)
-    console.log(partialRestaurant + " " + partialMeal)
-    targetElement.textContent += partialRestaurant + " " + partialMeal + "\n";
+    console.log("Slicing:  " + partialRestaurant + " " + partialMeal)
+    targetElement.textContent += "Slicing:  " + partialRestaurant + " " + partialMeal + "\n";
 }
 
 //Concatination - like python, I can concatinate a string by using a + - this works with variables and strings themselves
 function concatinate(){
     const restaurantMeal = restaurant + " " + meal
-    console.log(restaurantMeal)
-    targetElement.textContent += restaurantMeal + "\n"; 
+    console.log("Concatination:  " + restaurantMeal)
+    targetElement.textContent += "Concatination:  " + restaurantMeal + "\n"; 
 }
 
 //Palendroming - I just reversed the word by loopong through each letter backwards similar to how we learned in Python
@@ -30,8 +30,8 @@ function reverseString(){
         reversedMeal += meal[i];
     }
 
-    console.log(reversedMeal + " " + reversedRestaurant)
-    targetElement.textContent += reversedMeal + " " + reversedRestaurant + "\n";         
+    console.log("Reversed:  " + reversedMeal + " " + reversedRestaurant)
+    targetElement.textContent += "Reversed:  " +  reversedMeal + " " + reversedRestaurant + "\n";         
 }
 
 slice()
