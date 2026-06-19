@@ -9,6 +9,7 @@ const data = document.getElementById("data");
 const apiKey = "LHjJzOt7ulZb4iwojkDh6TCU3JjXXB2D"; //Tracking api key under a constant so that I can use it in all functions, also incase my key doesnt work later you can use one
 let company = "" //Sets variable company to nothing until search function outside of the searchOverview so it can be accessed by all
 let currentTicker = "";
+let valuation = "";
 
 async function searchOverview(){ //Function intended to collect basic API data and display for the user after button is pressed ***async sends whats called a promise which means that the function expects to recieve something back and will throw up an error if nothing retrieved
     const ticker = tickerInput.value.trim().toUpperCase(); //.trim() and .toUpperCase() methods are like strip and upper in python
@@ -71,7 +72,7 @@ async function showFundamentals() {
 
     //Handling invalid inputs
     if (incomeData.length === 0||balanceData.length === 0||cashData.length === 0){
-        overview.textContent = "Ticker Not Found.  Please Try Again.";
+        data.textContent = "Ticker Not Found.  Please Try Again.";
         return;
     }
 
@@ -120,7 +121,6 @@ async function showFundamentals() {
 }
 
 async function showAnalystRatings(){
-    let strongBuy = 0
 
     if (currentTicker === "") {//Checks if no ticker input so user gives us a ticker first
         data.innerHTML = "Please search for a company first.";
@@ -134,7 +134,7 @@ async function showAnalystRatings(){
     const analystRatingsData = await analystRatingsResponse.json();
 
     if (analystRatingsData.length === 0){
-        overview.textContent = "Ticker Not Found.  Please Try Again.";
+        data.textContent = "Ticker Not Found.  Please Try Again.";
         return;
     }
 
@@ -171,14 +171,86 @@ async function showAnalystRatings(){
         }]
         };
 
-    const ctx = document.getElementById("ratingsChart");
+    const analystChart = document.getElementById("ratingsChart");
 
-    new Chart(ctx, { //I use data to make chart
+    new Chart(analystChart, { //I use data to make chart
         type: "doughnut",
         data: chartData
         });
 
+}
 
+async function showValuation() {
+
+    if (currentTicker === "") {
+        data.innerHTML = "Please search for a company first.";
+        return;
+    }
+
+    const valuationUrl =
+        "https://financialmodelingprep.com/stable/custom-discounted-cash-flow?symbol=" + currentTicker + "&apikey=" + apiKey;
+
+    const response = await fetch(valuationUrl);
+    const valuationData = await response.json();
+
+    if (valuationData.length === 0) {
+        data.textContent = "Ticker Not Found. Try Again.";
+        return;
+    }
+
+    const valuation = valuationData[0];
+
+    data.innerHTML = `
+        <h2>${currentTicker} - DCF Valuation</h2>
+
+        <label>Growth Rate (%)</label>
+        <input type="number" id="growthRate" value="5">
+
+        <label>Terminal Growth Rate (%)</label>
+        <input type="number" id="terminalGrowth" value="3">
+
+        <button id="runDCF">Run DCF</button>
+
+        <div id="dcfResult"></div>
+    `;
+
+    const button = document.getElementById("runDCF");
+
+    button.addEventListener("click", function () {
+
+        const growthRate =
+            parseFloat(document.getElementById("growthRate").value) / 100;
+
+        const terminalGrowth =
+            parseFloat(document.getElementById("terminalGrowth").value) / 100;
+
+        const ufcf = valuation.ufcf;
+        const wacc = valuation.wacc / 100;
+
+        const projectedFCF = ufcf * (1 + growthRate);
+
+        const pvFCF = projectedFCF / (1 + wacc);
+
+        const terminalValue =
+            (projectedFCF * (1 + terminalGrowth)) /
+            (wacc - terminalGrowth);
+
+        const pvTerminal = terminalValue / (1 + wacc);
+
+        const enterpriseValue = pvFCF + pvTerminal;
+
+        const equityValue = enterpriseValue - valuation.netDebt;
+
+        const perShare =
+            equityValue / valuation.dilutedSharesOutstanding;
+
+        document.getElementById("dcfResult").innerHTML = `
+            <h3>Results</h3>
+            <p><strong>Enterprise Value:</strong> $${enterpriseValue.toLocaleString()}</p>
+            <p><strong>Equity Value:</strong> $${equityValue.toLocaleString()}</p>
+            <p><strong>Intrinsic Value:</strong> $${perShare.toFixed(2)}</p>
+        `;
+    });
 }
 
 
@@ -188,6 +260,4 @@ fundamentalsButton.addEventListener("click", showFundamentals);
 
 analystRatingsButton.addEventListener("click", showAnalystRatings);
 
-/*valuationButton.addEventListener("click", showValuation);
-
-aiAnalysisButton.addEventListener("click", showAIAnalysis);*/
+valuationButton.addEventListener("click", showValuation);
