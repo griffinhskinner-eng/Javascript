@@ -1,10 +1,11 @@
+//WEBSITE - https://site.financialmodelingprep.com/
+
 const searchButton = document.getElementById("searchButton");
 const tickerInput = document.getElementById("ticker");
 const overview = document.getElementById("overview");
 const fundamentalsButton = document.getElementById("fundamentals");
 const analystRatingsButton = document.getElementById("analystRatings");
 const valuationButton = document.getElementById("valuation");
-const aiAnalysisButton = document.getElementById("aiAnalysis");
 const data = document.getElementById("data");
 const apiKey = "LHjJzOt7ulZb4iwojkDh6TCU3JjXXB2D"; //Tracking api key under a constant so that I can use it in all functions, also incase my key doesnt work later you can use one
 let company = "" //Sets variable company to nothing until search function outside of the searchOverview so it can be accessed by all
