@@ -1,0 +1,159 @@
+* {
+    margin: 5;
+    padding: 5;
+    box-sizing: border-box; /* Makes padding/borders not add to element size */
+}
+
+body { /*Body sets the font, background, text, spacing for the whole page*/
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background-color: #c3d6ee; 
+    color: #333; /* Dark text for readability */
+    line-height: 1.5;  
+}
+
+main {
+    max-width: 1000px; 
+    padding: 20px; /* Space inside the main container */
+    background-color: rgb(219, 245, 255); /* White background for main content */
+}
+
+header {
+    text-align: center; /* Centers the title */
+    margin-bottom: 30px; /* Space below header */
+    padding-bottom: 20px; /* Space inside header */
+    border-bottom: 3px solid #024881; /* Blue line under header */
+}
+
+header h1 {
+    color: #012e53; 
+    font-size: 2.5em; 
+}
+
+#searchSection { /*Hashtags are used to identify elements by their id, otherwise general peices like buttons have general design*/
+    display: flex; /* Puts input and button side by side */
+    gap: 10px; /* Space between input and button */
+    margin-bottom: 20px;
+}
+
+#ticker {
+    flex: 1; /* Takes up available space */
+    padding: 12px; /* Space inside input */
+    font-size: 1em;
+    border: 2px solid #ddd; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    transition: border-color 0.3s; /* Smooth color change on focus */
+}
+
+#ticker:focus {
+    outline: none; /* Removes default outline */
+    border-color: #026fc9; /* Blue border when clicked */
+}
+
+button {
+    padding: 12px 24px; /* Space inside button */
+    background-color: #2196F3; /* Blue background */
+    color: white; /* White text */
+    border: #011a2e; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Changes cursor to hand on hover */
+    font-size: 1em;
+    transition: background-color 0.3s; /* Smooth color change on hover */
+}
+
+button:hover {
+    background-color: #0b539b; /* Darker blue when hovering */
+}
+
+button:active {
+    transform: scale(0.90); /* Slightly shrinks button when clicked */
+}
+
+#navigation {
+    display: flex; /* Puts buttons in a row */
+    gap: 10px; /* Space between buttons */
+    flex-wrap: wrap; /* Buttons wrap to next line on small screens */
+    margin: 20px 0; /* Space above and below */
+}
+
+#navigation button {
+    flex: 1; /* Buttons share space equally */
+    min-width: 150px; /* Minimum button width */
+    background-color: #6aaf6c; /* Green color for nav buttons */
+}
+
+#navigation button:hover {
+    background-color: #28612b; /* Darker green on hover */
+}
+
+#overview, #data {
+    background-color: #c5e0ff; 
+    padding: 20px; /* Space inside */
+    border-radius: 5px; /* Rounded corners */
+    margin: 20px 0; /* Space above and below */
+    border-left: 4px solid #093d68; /* Blue accent line on left */
+}
+
+#overview h2, #data h2 {
+    color: #055da5; /* Blue headings */
+    margin-bottom: 15px;
+}
+
+#data h3 {
+    color: #204892;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 8px; /* Space between paragraphs */
+}
+
+strong {
+    color: #015eaa; /* Blue for labels */
+}
+
+hr {
+    margin: 20px 0; /* Space around divider line */
+    border: none; /* Remove default border */
+    border-top: 1px solid #ddd; /* Light gray line */
+}
+
+label {
+    display: block; /* Makes label take full width */
+    margin-top: 15px; /* Space above label */
+    margin-bottom: 5px; /* Space below label */
+    font-weight: bold; /* Makes label bold */
+    color: #4e65e7;
+}
+
+input[type="number"] {
+    width: 100%; /* Takes full width */
+    padding: 10px; /* Space inside input */
+    margin-bottom: 15px; /* Space below input */
+    border: 2px solid #0d0235; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1em;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: #052d4e; /* Blue border when clicked */
+}
+
+#dcfResult {
+    margin-top: 20px; /* Space above results */
+    padding: 15px; /* Space inside */
+    background-color: #90dfd5; /* Very light blue background */
+    border-radius: 5px; /* Rounded corners */
+    border-left: 4px solid #4CAF50; /* Green accent for results */
+}
+
+#dcfResult h3 {
+    color: #4CAF50; /* Green for results heading */
+    margin-bottom: 10px;
+}
+
+canvas {
+    max-width: 100%; /* Makes canvas responsive */
+    margin: 20px 0; /* Space around chart */
+}
