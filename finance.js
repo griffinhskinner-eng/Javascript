@@ -119,13 +119,75 @@ async function showFundamentals() {
     `;
 }
 
+async function showAnalystRatings(){
+    let strongBuy = 0
+
+    if (currentTicker === "") {//Checks if no ticker input so user gives us a ticker first
+        data.innerHTML = "Please search for a company first.";
+        return;
+    }
+
+    const analystRatingsUrl = "https://financialmodelingprep.com/stable/grades-consensus?symbol=" + currentTicker + "&apikey=" + apiKey;
+
+    const analystRatingsResponse = await fetch(analystRatingsUrl);
+
+    const analystRatingsData = await analystRatingsResponse.json();
+
+    if (analystRatingsData.length === 0){
+        overview.textContent = "Ticker Not Found.  Please Try Again.";
+        return;
+    }
+
+    const analystRatings = analystRatingsData[0];
+
+    //Note that a canvas allows me to insert charts, graphics, or animations.  I use another id to connect it to the code where I actually build a chart
+    data.innerHTML=`
+        <h2>${company.companyName} - Analyst Ratings</h2>
+
+        <p><strong>Consensus Rating:</strong> ${analystRatings.consensus}</p>
+
+        <canvas id="ratingsChart"></canvas> 
+        
+    `
+    const chartData = { //New variable to contain all my data in an object, this is required for chart.js
+        labels: [
+            'Strong Buy',
+            'Buy',
+            'Neutral',
+            'Sell',
+            'Strong Sell'
+
+         ],
+        datasets: [{ //Datasets is formatted as an object with arrays - key-value pairs
+            data: [analystRatings.strongBuy,analystRatings.buy,analystRatings.hold,analystRatings.sell,analystRatings.strongSell],
+            backgroundColor: [
+            'rgb(46, 117, 89)',   
+            'rgb(75, 192, 192)',  
+            'rgb(255, 205, 86)',  
+            'rgb(255, 159, 64)',  
+            'rgb(255, 99, 132)'   
+            ],
+            hoverOffset: 6 //This makes the chart interactive so that when hovering over it, he slice is pushed out
+        }]
+        };
+
+    const ctx = document.getElementById("ratingsChart");
+
+    new Chart(ctx, { //I use data to make chart
+        type: "doughnut",
+        data: chartData
+        });
+
+
+}
+
 
 searchButton.addEventListener("click", searchOverview);
 
 fundamentalsButton.addEventListener("click", showFundamentals);
 
-/*analystRatingsButton.addEventListener("click", showAnalystRatings);
+analystRatingsButton.addEventListener("click", showAnalystRatings);
 
-valuationButton.addEventListener("click", showValuation);
+/*valuationButton.addEventListener("click", showValuation);
 
 aiAnalysisButton.addEventListener("click", showAIAnalysis);*/
